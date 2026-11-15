@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Néonat</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Néonat">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1014" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+:root{--bg:#f5f6f8;--bar:#ffffffee;--line:#e3e6eb;--muted:#667085;--accent:#0f766e}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1014;--bar:#171a21ee;--line:#2a2f3a;--muted:#98a2b3;--accent:#2dd4bf}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.app{position:fixed;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+.views{flex:1;position:relative}
+iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+iframe[hidden]{display:none}
+nav{display:flex;border-top:1px solid var(--line);background:var(--bar);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+nav button{flex:1;border:0;background:none;font:inherit;font-size:.72rem;color:var(--muted);
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+nav button svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="views">
+    <iframe id="v-pct" src="percentiles.html" title="Percentiles" allow="clipboard-write"></iframe>
+    <iframe id="v-perf" src="perfusion.html" title="Perfusion" allow="clipboard-write" hidden></iframe>
+  </div>
+  <nav>
+    <button type="button" data-v="pct" class="on">
+      <svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M4 17c4-1 7-5 9-9s4-4 7-4"/><path d="M4 13c4-1 6-4 8-7"/><circle cx="14.5" cy="10" r="1.6"/></svg>
+      Percentiles
+    </button>
+    <button type="button" data-v="perf">
+      <svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v3l-2 2v9a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V8l-2-2V3"/><path d="M8 12h8"/><path d="M12 19v2"/></svg>
+      Perfusion
+    </button>
+  </nav>
+</div>
+<script>
+const btns = document.querySelectorAll('nav button');
+function show(v){
+  btns.forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  document.getElementById('v-pct').hidden = v !== 'pct';
+  document.getElementById('v-perf').hidden = v !== 'perf';
+  try { localStorage.setItem('neonat-tab', v); } catch(e){}
+}
+btns.forEach(b => b.addEventListener('click', () => show(b.dataset.v)));
+try { const t = localStorage.getItem('neonat-tab'); if (t) show(t); } catch(e){}
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
