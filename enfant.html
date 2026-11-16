@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfusion de l'enfant</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--ink:#1b2230;--muted:#667085;--line:#e3e6eb;
+  --accent:#0f766e;--accent-soft:#e7f4f2;--drop:#175cd3;--drop-soft:#eaf2ff;
+  --warn:#b54708;--warn-soft:#fff6e5;--info:#175cd3;--info-soft:#eaf2ff;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0e1014;--card:#171a21;--ink:#e7e9ee;--muted:#98a2b3;--line:#2a2f3a;
+    --accent:#2dd4bf;--accent-soft:#10302c;--drop:#84adff;--drop-soft:#14223d;
+    --warn:#fdb022;--warn-soft:#33240a;--info:#84adff;--info-soft:#14223d}
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.4;-webkit-text-size-adjust:100%}
+main{max-width:560px;margin:0 auto;padding:14px 14px 48px}
+h1{font-size:1.2rem;margin:4px 0 12px;letter-spacing:-.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:4px;font-weight:500}
+input{width:100%;font:inherit;font-size:1.02rem;color:var(--ink);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;padding:9px 10px;outline:none;-webkit-appearance:none;appearance:none}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.u{position:relative}.u span{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.78rem;pointer-events:none}
+.u input{padding-right:62px}
+.seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;font:inherit;font-size:.88rem;padding:7px 4px;border-radius:8px;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.mt{margin-top:12px}
+.head{font-size:.85rem;color:var(--muted);margin-bottom:10px}
+.head b{color:var(--ink)}
+.big{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{border-radius:12px;padding:12px}
+.kpi .l{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;opacity:.85}
+.kpi .v{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
+.kpi .v small{font-size:.9rem;font-weight:600;margin-left:3px;opacity:.8}
+.kpi .s{font-size:.8rem;color:var(--muted);margin-top:2px}
+.kpi.iv{background:var(--accent-soft);color:var(--accent)}
+.kpi.drop{background:var(--drop-soft);color:var(--drop)}
+.rx{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:14px}
+.rx td{padding:7px 2px;border-top:1px solid var(--line);font-size:.95rem}
+.rx td.q{text-align:right;font-weight:700;white-space:nowrap}
+.rx td small{color:var(--muted);font-size:.76rem;margin-left:4px}
+.alerts{list-style:none;margin:10px 0 0;padding:0}
+.alerts li{padding:7px 10px;border-radius:9px;font-size:.84rem;margin-top:6px}
+.alerts li.warn{background:var(--warn-soft);color:var(--warn)}
+.alerts li.info{background:var(--info-soft);color:var(--info)}
+.btn{display:block;width:100%;margin-top:14px;font:inherit;font-size:.95rem;font-weight:600;border-radius:11px;padding:11px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+@media (prefers-color-scheme:dark){.btn{color:#0e1014}}
+.foot{font-size:.74rem;color:var(--muted);line-height:1.5}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(90px);opacity:0;background:var(--ink);color:var(--bg);
+  padding:9px 14px;border-radius:10px;font-size:.88rem;transition:transform .25s,opacity .25s;pointer-events:none;z-index:9}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media (max-width:370px){.kpi .v{font-size:1.55rem}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Perfusion de l'enfant</h1>
+
+  <section class="card">
+    <div class="g2">
+      <div><label for="poids">Poids</label><div class="u"><input id="poids" inputmode="decimal" placeholder="12" autocomplete="off"><span>kg</span></div></div>
+      <div><label for="ration">Apports</label><div class="u"><input id="ration" inputmode="decimal" value="1700" autocomplete="off"><span>ml/m²/j</span></div></div>
+    </div>
+    <div class="mt"><label>Perfuseur</label><div class="seg" id="gtt">
+      <button type="button" data-v="20" class="on">20 gouttes/ml</button>
+      <button type="button" data-v="60">60 gouttes/ml (micro)</button>
+    </div></div>
+  </section>
+
+  <section class="card" id="result"></section>
+
+  <p class="foot">
+    Surface corporelle d'après le poids seul (formule de Costeff) : SC (m²) = (4 × P + 7) / (P + 90), P en kg.
+    Volume/24 h = SC × apports (ml/m²/j). Débit (ml/h) = volume / 24 ; gouttes/min = ml/h × gouttes par ml / 60.
+    Perfuseur standard : 20 gouttes/ml ; micro-perfuseur (pédiatrique) : 60 gouttes/ml (alors gouttes/min = ml/h).
+    Outil d'aide : à adapter à l'état d'hydratation, à la diurèse, à l'ionogramme ; ne remplace pas la prescription ni la double vérification.
+  </p>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const st = { gtt: 20 };
+const num = s => { s = String(s ?? '').trim().replace(',', '.'); if(!s) return null; const v = parseFloat(s); return isFinite(v) ? v : null; };
+const f = (v, d=1) => { const r = (Math.round(v*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace('.', ','); return d ? r.replace(/,0+$/,'') : r; };
+const fx = (v, d) => (Math.round(v*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace('.', ',');
+let lastText = '';
+
+function render(){
+  let p = num($('poids').value);
+  if (p != null && p >= 300) p = p/1000;           // saisi en grammes
+  const ration = num($('ration').value) || 1700;
+  const R = $('result');
+  if (!p || p < 1.5 || p > 120){
+    R.innerHTML = `<div class="foot" style="font-size:.95rem;text-align:center;padding:10px 0">Saisissez le poids (kg) pour afficher la surface corporelle, le débit (ml/h) et les gouttes/min.</div>`;
+    lastText = ''; return;
+  }
+  const sc = (4*p + 7) / (p + 90);
+  const vol = sc * ration;
+  const mlh = vol / 24, mlmin = vol / 1440;
+  const gpm = mlh * st.gtt / 60;
+  const other = st.gtt === 20 ? 60 : 20;
+  const gpmOther = mlh * other / 60;
+  const secPerDrop = gpm > 0 ? 60 / gpm : 0;
+
+  R.innerHTML = `
+    <div class="head">${f(p,1)} kg · SC <b>${fx(sc,2)} m²</b> · ${f(ration,0)} ml/m²/j</div>
+    <div class="big">
+      <div class="kpi iv"><div class="l">Débit</div>
+        <div class="v">${f(mlh,1)}<small>ml/h</small></div>
+        <div class="s">${f(vol,0)} ml/24 h</div></div>
+      <div class="kpi drop"><div class="l">Gouttes</div>
+        <div class="v">${f(gpm,0)}<small>gtt/min</small></div>
+        <div class="s">perfuseur ${st.gtt} gtt/ml · 1 goutte / ${f(secPerDrop,1)} s</div></div>
+    </div>
+    <table class="rx">
+      <tr><td>Surface corporelle</td><td class="q">${fx(sc,2)} m²</td></tr>
+      <tr><td>Volume / 24 h<small>${f(ration,0)} ml/m²/j</small></td><td class="q">${f(vol,0)} ml</td></tr>
+      <tr><td>Débit</td><td class="q">${f(mlh,1)} ml/h</td></tr>
+      <tr><td>Gouttes/min<small>perfuseur ${st.gtt} gtt/ml</small></td><td class="q">${f(gpm,0)} gtt/min</td></tr>
+      <tr><td>Gouttes/min<small>perfuseur ${other} gtt/ml</small></td><td class="q">${f(gpmOther,0)} gtt/min</td></tr>
+    </table>
+    <ul class="alerts" id="alerts"></ul>
+    <button type="button" class="btn" id="copy">Copier la prescription</button>`;
+
+  const al = [];
+  if (p < 10) al.push(['info','Enfant < 10 kg : vérifier avec le calcul en ml/kg/j (Holliday-Segar : 100 ml/kg/j).']);
+  if (vol > 2500) al.push(['warn',`Volume ${f(vol,0)} ml/24 h : au-delà des apports habituels de l'adulte (≈ 2 000–2 500 ml/j).`]);
+  $('alerts').innerHTML = al.map(([t,x]) => `<li class="${t}">${x}</li>`).join('');
+  $('copy').onclick = copyRx;
+
+  lastText = `Enfant ${f(p,1)} kg – SC ${fx(sc,2)} m²\n` +
+    `Apports ${f(ration,0)} ml/m²/j = ${f(vol,0)} ml/24 h\n` +
+    `Débit : ${f(mlh,1)} ml/h\n` +
+    `${f(gpm,0)} gouttes/min (perfuseur ${st.gtt} gtt/ml)`;
+}
+
+function toast(m){ const e=$('toast'); e.textContent=m; e.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>e.classList.remove('show'),1800); }
+async function copyRx(){
+  if (!lastText) return;
+  try { await navigator.clipboard.writeText(lastText); toast('Prescription copiée'); }
+  catch(e){ try{ const ta=document.createElement('textarea'); ta.value=lastText; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast('Prescription copiée'); }catch(e2){ toast('Copie impossible ici'); } }
+}
+
+$('gtt').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  $('gtt').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  st.gtt = +b.dataset.v; render();
+}));
+['poids','ration'].forEach(id => $(id).addEventListener('input', render));
+render();
+})();
+</script>
+</body>
+</html>
