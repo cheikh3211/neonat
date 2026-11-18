@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ictère néonatal – AAP 2022</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--ink:#1b2230;--muted:#667085;--line:#e3e6eb;
+  --accent:#0f766e;--accent-soft:#e7f4f2;
+  --photo:#c4720a;--photo-soft:#fdf3e4;--esc:#b54708;--exch:#b42318;--exch-soft:#fdeceb;
+  --ok:#067647;--ok-soft:#ecfdf3;--info:#175cd3;--info-soft:#eaf2ff;--warn:#b54708;--warn-soft:#fff6e5;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0e1014;--card:#171a21;--ink:#e7e9ee;--muted:#98a2b3;--line:#2a2f3a;
+    --accent:#2dd4bf;--accent-soft:#10302c;--photo:#fdb022;--photo-soft:#33240a;--esc:#f79009;--exch:#f97066;--exch-soft:#3a1714;
+    --ok:#47cd89;--ok-soft:#0c2a1c;--info:#84adff;--info-soft:#14223d;--warn:#fdb022;--warn-soft:#33240a}
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.4;-webkit-text-size-adjust:100%}
+main{max-width:560px;margin:0 auto;padding:14px 14px 48px}
+h1{font-size:1.2rem;margin:4px 0 12px;letter-spacing:-.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:4px;font-weight:500}
+select,input{width:100%;font:inherit;font-size:1.02rem;color:var(--ink);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;padding:9px 10px;outline:none;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 50%,calc(100% - 10px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:26px}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+input[type=checkbox]{width:20px;height:20px;padding:0;flex:none;accent-color:var(--accent);-webkit-appearance:auto;appearance:auto;margin:1px 0 0}
+.u{position:relative}.u span{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.78rem;pointer-events:none}
+.u input{padding-right:52px}
+.seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;font:inherit;font-size:.88rem;padding:7px 4px;border-radius:8px;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.mt{margin-top:12px}
+.hint{font-size:.75rem;color:var(--muted);margin-top:4px}
+.chk{display:flex;align-items:flex-start;gap:9px;font-size:.9rem;margin-top:9px}
+.sec{font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin:14px 0 2px}
+details summary{cursor:pointer;font-size:.88rem;font-weight:600;color:var(--accent);margin-top:12px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+.verdict{border-radius:12px;padding:12px 14px}
+.verdict .t{font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
+.verdict .s{font-size:.85rem;margin-top:3px;opacity:.9}
+.v-ok{background:var(--ok-soft);color:var(--ok)}
+.v-photo{background:var(--photo-soft);color:var(--photo)}
+.v-esc{background:var(--exch-soft);color:var(--esc)}
+.v-exch{background:var(--exch);color:#fff}
+.v-na{background:var(--info-soft);color:var(--info)}
+.thr{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:12px}
+.thr td{padding:7px 2px;border-top:1px solid var(--line);font-size:.93rem}
+.thr td.q{text-align:right;font-weight:700;white-space:nowrap}
+.thr td small{color:var(--muted);font-size:.74rem;margin-left:4px;font-weight:400}
+.thr tr.me td{background:var(--accent-soft)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+ul.todo{margin:10px 0 0;padding-left:20px;font-size:.9rem}
+ul.todo li{margin-top:5px}
+.alerts{list-style:none;margin:10px 0 0;padding:0}
+.alerts li{padding:7px 10px;border-radius:9px;font-size:.84rem;margin-top:6px}
+.alerts li.warn{background:var(--warn-soft);color:var(--warn)}
+.alerts li.info{background:var(--info-soft);color:var(--info)}
+.alerts li.bad{background:var(--exch-soft);color:var(--exch)}
+svg text{font-family:inherit}
+.btn{display:block;width:100%;margin-top:14px;font:inherit;font-size:.95rem;font-weight:600;border-radius:11px;padding:11px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+@media (prefers-color-scheme:dark){.btn{color:#0e1014}}
+.foot{font-size:.74rem;color:var(--muted);line-height:1.5}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(90px);opacity:0;background:var(--ink);color:var(--bg);
+  padding:9px 14px;border-radius:10px;font-size:.88rem;transition:transform .25s,opacity .25s;pointer-events:none;z-index:9}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ictère néonatal ≥ 35 SA (AAP 2022)</h1>
+
+  <section class="card">
+    <div class="g2">
+      <div><label for="ag">Âge gestationnel</label>
+        <select id="ag">
+          <option value="34">&lt; 35 SA</option>
+          <option value="35">35 SA</option><option value="36">36 SA</option><option value="37">37 SA</option>
+          <option value="38" selected>38 SA</option><option value="39">39 SA</option><option value="40">≥ 40 SA</option>
+        </select></div>
+      <div><label for="age">Âge au prélèvement</label><div class="u"><input id="age" inputmode="numeric" placeholder="48" autocomplete="off"><span>heures</span></div></div>
+    </div>
+    <div class="hint" id="ageHint">J1 = 24 h, J2 = 48 h, J3 = 72 h…</div>
+
+    <div class="mt"><label for="bt">Bilirubine totale</label><div class="u"><input id="bt" inputmode="decimal" placeholder="ex. 116" autocomplete="off"><span id="btU">mg/l</span></div></div>
+    <div class="mt"><div class="seg" id="unit">
+      <button type="button" data-v="mgl" class="on">mg/l</button>
+      <button type="button" data-v="umol">µmol/l</button>
+      <button type="button" data-v="mgdl">mg/dl</button>
+    </div></div>
+
+    <div class="sec">Facteurs de risque de neurotoxicité</div>
+    <label class="chk"><input type="checkbox" id="rf_iso"> Hémolyse isoimmune (Coombs direct +, incompatibilité ABO / Rhésus)</label>
+    <label class="chk"><input type="checkbox" id="rf_g6pd"> Déficit en G6PD ou autre hémolyse</label>
+    <label class="chk"><input type="checkbox" id="rf_sep"> Sepsis</label>
+    <label class="chk"><input type="checkbox" id="rf_inst"> Instabilité clinique significative dans les 24 h</label>
+    <label class="chk"><input type="checkbox" id="rf_alb"> Albumine &lt; 30 g/l</label>
+    <div class="hint">L'âge gestationnel &lt; 38 SA est déjà pris en compte par les courbes.</div>
+
+    <details id="more">
+      <summary>+ Albumine et bilirubine précédente (facultatif)</summary>
+      <div class="g2 mt">
+        <div><label for="alb">Albumine</label><div class="u"><input id="alb" inputmode="decimal" placeholder="ex. 32" autocomplete="off"><span>g/l</span></div></div>
+        <div></div>
+        <div><label for="bt0">Bilirubine précédente</label><div class="u"><input id="bt0" inputmode="decimal" autocomplete="off"><span id="bt0U">mg/l</span></div></div>
+        <div><label for="age0">à l'âge de</label><div class="u"><input id="age0" inputmode="numeric" autocomplete="off"><span>heures</span></div></div>
+      </div>
+      <div class="hint">L'albumine sert au rapport bilirubine/albumine ; la valeur précédente sert à calculer la vitesse d'ascension.</div>
+    </details>
+  </section>
+
+  <section class="card" id="result"></section>
+
+  <p class="foot">
+    Seuils : AAP 2022 (Kemper AR et al., Pediatrics 2022;150(3):e2022058859), nouveau-nés ≥ 35 SA. Valeurs à 24, 48, 72, 96 et 120 h
+    reprises des tableaux de la recommandation ; valeurs intermédiaires interpolées (écart possible de ± 0,3 mg/dl entre ces points).
+    Escalade des soins = seuil d'exsanguinotransfusion − 2 mg/dl. Conversion : 1 mg/dl = 10 mg/l = 17,1 µmol/l.
+    Utiliser la bilirubine totale sérique (pas la bilirubine conjuguée). Outil d'aide : ne remplace pas le jugement clinique.
+  </p>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+
+/* Seuils en mg/dl : [heure, valeur] */
+const PHOTO_NR = {
+  35:[[0,6.3],[24,10.6],[48,14.2],[72,16.8],[96,18.6],[120,18.7],[336,19.6]],
+  36:[[0,6.9],[24,11.2],[48,14.8],[72,17.5],[96,19.3],[120,19.4],[336,20.3]],
+  37:[[0,7.4],[24,11.7],[48,15.4],[72,18.1],[96,20.0],[120,20.2],[336,21.1]],
+  38:[[0,7.9],[24,12.3],[48,16.0],[72,18.8],[96,20.7],[120,20.9],[336,21.8]],
+  39:[[0,8.4],[24,12.8],[48,16.6],[72,19.5],[96,21.5],[120,21.6],[168,21.8],[336,21.8]],
+  40:[[0,8.9],[24,13.3],[48,17.0],[72,19.8],[96,21.8],[336,21.8]]
+};
+const PHOTO_R = {
+  35:[[0,4.9],[24,8.9],[48,12.2],[72,14.6],[96,16.1],[120,16.3],[336,17.3]],
+  36:[[0,5.4],[24,9.4],[48,12.8],[72,15.4],[96,17.0],[120,17.1],[336,18.2]],
+  37:[[0,5.9],[24,10.0],[48,13.5],[72,16.1],[96,17.9],[120,18.0],[168,18.2],[336,18.2]],
+  38:[[0,6.4],[24,10.5],[48,14.0],[72,16.6],[96,18.2],[336,18.2]]
+};
+const EXCH_NR = {
+  35:[[0,14.8],[24,17.9],[48,20.7],[72,22.9],[96,24.5],[120,24.7],[336,26.3]],
+  36:[[0,15.9],[24,19.1],[48,21.9],[72,24.1],[96,25.5],[120,25.7],[336,27.0]],
+  37:[[0,17.0],[24,20.3],[48,23.1],[72,25.2],[96,26.6],[120,26.7],[168,27.0],[336,27.0]],
+  38:[[0,18.1],[24,21.4],[48,24.0],[72,25.9],[96,27.0],[336,27.0]]
+};
+const EXCH_R = {
+  35:[[0,13.2],[24,16.1],[48,18.5],[72,20.1],[96,21.1],[120,21.3],[336,22.9]],
+  36:[[0,13.7],[24,16.6],[48,19.1],[72,20.9],[96,22.1],[120,22.3],[336,23.5]],
+  37:[[0,14.3],[24,17.2],[48,19.7],[72,21.7],[96,23.1],[120,23.2],[168,23.5],[336,23.5]],
+  38:[[0,14.9],[24,17.7],[48,20.1],[72,22.1],[96,23.5],[336,23.5]]
+};
+
+/* Interpolation : cubique monotone (PCHIP) de 0 à 96 h, linéaire au-delà */
+function pchip(xs, ys, x){
+  const n = xs.length, d = [], m = [];
+  for (let i=0;i<n-1;i++) d.push((ys[i+1]-ys[i])/(xs[i+1]-xs[i]));
+  m[0] = d[0]; m[n-1] = d[n-2];
+  for (let i=1;i<n-1;i++){ m[i] = (d[i-1]*d[i] <= 0) ? 0 : 2/(1/d[i-1] + 1/d[i]); }
+  let k = 0; while (k < n-2 && x > xs[k+1]) k++;
+  const h = xs[k+1]-xs[k], t = (x-xs[k])/h, t2=t*t, t3=t2*t;
+  return (2*t3-3*t2+1)*ys[k] + (t3-2*t2+t)*h*m[k] + (-2*t3+3*t2)*ys[k+1] + (t3-t2)*h*m[k+1];
+}
+function thr(curve, h){
+  h = Math.max(0, Math.min(336, h));
+  if (h <= 96){
+    const pts = curve.filter(p => p[0] <= 96);
+    return pchip(pts.map(p=>p[0]), pts.map(p=>p[1]), h);
+  }
+  for (let i=0;i<curve.length-1;i++){
+    const [x0,y0] = curve[i], [x1,y1] = curve[i+1];
+    if (h >= x0 && h <= x1) return y0 + (y1-y0)*(h-x0)/(x1-x0);
+  }
+  return curve[curve.length-1][1];
+}
+
+/* Unités */
+const U = {
+  mgl:{lab:'mg/l', f:10, d:0},
+  umol:{lab:'µmol/l', f:17.1, d:0},
+  mgdl:{lab:'mg/dl', f:1, d:1}
+};
+let unit = 'mgl';
+try { const u = localStorage.getItem('bili-unit'); if (U[u]) unit = u; } catch(e){}
+const toMgdl = v => v / U[unit].f;
+const fromMgdl = v => v * U[unit].f;
+const fmt = (v, d) => (Math.round(v*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace('.', ',');
+const show = mgdl => fmt(fromMgdl(mgdl), U[unit].d) + ' ' + U[unit].lab;
+const num = s => { s = String(s ?? '').trim().replace(',', '.'); if(!s) return null; const v = parseFloat(s); return isFinite(v) ? v : null; };
+
+function followUp(diff, h){
+  // diff = seuil photothérapie − BT (mg/dl), BT sous le seuil (AAP 2022, fig. 7)
+  if (diff < 2) return h < 24
+    ? ['Retarder la sortie et discuter la photothérapie.', 'Contrôle de la bilirubine dans 4 à 8 h.']
+    : ['Contrôle de la bilirubine dans 4 à 24 h.', 'Options : retarder la sortie et discuter la photothérapie, ou sortie avec suivi rapproché.'];
+  if (diff < 3.5) return h < 24
+    ? ['Contrôle de la bilirubine (sérique ou transcutanée) dans 4 à 12 h.']
+    : ['Contrôle de la bilirubine (sérique ou transcutanée) dans 1 à 2 jours.'];
+  if (diff < 5.5) return h < 24
+    ? ['Contrôle de la bilirubine (sérique ou transcutanée) dans 12 à 24 h.']
+    : ['Revoir l\'enfant dans les 2 jours ; bilirubine selon l\'examen clinique.'];
+  if (diff < 7) return h < 72
+    ? ['Revoir l\'enfant dans les 2 jours ; bilirubine selon l\'examen clinique.']
+    : ['Surveillance selon le jugement clinique.'];
+  return ['Surveillance selon le jugement clinique.'];
+}
+
+let lastText = '';
+function render(){
+  $('btU').textContent = U[unit].lab; $('bt0U').textContent = U[unit].lab;
+  $('bt').placeholder = unit === 'mgl' ? 'ex. 116' : unit === 'umol' ? 'ex. 198' : 'ex. 11,6';
+  const ag = +$('ag').value;
+  const h = num($('age').value);
+  const v = num($('bt').value);
+  const alb = num($('alb').value);
+  if (alb != null && alb < 30) $('rf_alb').checked = true;
+  const risk = ['rf_iso','rf_g6pd','rf_sep','rf_inst','rf_alb'].some(id => $(id).checked);
+  const R = $('result');
+
+  $('ageHint').textContent = h != null && h > 0 ? `${fmt(h,0)} h = J${Math.floor(h/24)} + ${fmt(h%24,0)} h` : 'J1 = 24 h, J2 = 48 h, J3 = 72 h…';
+
+  if (ag < 35){
+    R.innerHTML = `<div class="verdict v-na"><div class="t">Courbes non applicables</div>
+      <div class="s">Les seuils AAP 2022 concernent les nouveau-nés ≥ 35 SA. Pour le prématuré &lt; 35 SA, utiliser des seuils spécifiques (plus bas).</div></div>`;
+    lastText=''; return;
+  }
+  if (h == null || v == null){
+    R.innerHTML = `<div class="foot" style="font-size:.95rem;text-align:center;padding:10px 0">Saisissez l'âge (heures) et la bilirubine totale.</div>`;
+    lastText=''; return;
+  }
+  if (h < 0 || h > 336){
+    R.innerHTML = `<div class="verdict v-na"><div class="t">Âge hors courbes</div><div class="s">Les courbes couvrent 0 à 336 h (14 jours). Au-delà : bilan d'ictère prolongé (bilirubine conjuguée, TSH…).</div></div>`;
+    lastText=''; return;
+  }
+
+  const gP = risk ? Math.min(ag,38) : ag, gE = Math.min(ag,38);
+  const cP = (risk ? PHOTO_R : PHOTO_NR)[gP], cE = (risk ? EXCH_R : EXCH_NR)[gE];
+  // seuils arrondis à la précision affichée, pour que l'affichage et la décision concordent
+  const rnd = mg => { const d = U[unit].d; return Math.round(fromMgdl(mg)*Math.pow(10,d))/Math.pow(10,d) / U[unit].f; };
+  const tP = rnd(thr(cP, h)), tE = rnd(thr(cE, h)), tEsc = rnd(thr(cE, h) - 2);
+  const bt = toMgdl(v);
+
+  let cls, title, sub, todo = [];
+  const iso = $('rf_iso').checked;
+  if (bt >= tE){
+    cls='v-exch'; title='Exsanguinotransfusion'; sub=`Bilirubine ≥ seuil d'exsanguinotransfusion (${show(tE)}).`;
+    todo = ['Exsanguinotransfusion urgente : transfert immédiat vers un service capable de la réaliser.',
+      'Photothérapie intensive sans attendre, poursuivie pendant le transfert si possible.',
+      'Bilan en urgence : bilirubine totale et conjuguée, albumine, NFS, groupe sanguin et Coombs direct, commande de sang.',
+      'Hydratation : perfusion de cristalloïdes si déshydratation.',
+      'Bilirubine toutes les 2 h jusqu\'à l\'exsanguinotransfusion.'];
+    if (iso) todo.push('Hémolyse isoimmune : immunoglobulines IV 0,5 à 1 g/kg en 2 h (renouvelable 12 h après).');
+  } else if (bt >= tEsc){
+    cls='v-esc'; title='Escalade des soins'; sub=`Bilirubine à moins de 2 mg/dl (${fmt(2*U[unit].f,U[unit].d)} ${U[unit].lab}) du seuil d'exsanguinotransfusion.`;
+    todo = ['Urgence : photothérapie intensive immédiate.',
+      'Prévenir / transférer vers un service capable de faire une exsanguinotransfusion.',
+      'Bilan : bilirubine totale et conjuguée, albumine, NFS, groupe sanguin et Coombs direct, commande de sang.',
+      'Hydratation : perfusion de cristalloïdes si déshydratation.',
+      'Bilirubine toutes les 2 h ; exsanguinotransfusion si le seuil est atteint.'];
+    if (iso) todo.push('Hémolyse isoimmune : immunoglobulines IV 0,5 à 1 g/kg en 2 h (renouvelable 12 h après).');
+  } else if (bt >= tP){
+    cls='v-photo'; title='Photothérapie intensive'; sub=`Bilirubine ≥ seuil de photothérapie (${show(tP)}).`;
+    todo = ['Photothérapie intensive : lumière bleue ≥ 30 µW/cm²/nm, surface cutanée exposée maximale.',
+      'Contrôle de la bilirubine dans 12 h maximum (plus tôt si hémolyse, facteur de risque ou proche de l\'escalade).',
+      'Poursuivre l\'alimentation (allaitement ou lait) ; pas d\'eau ni de glucosé per os.',
+      `Arrêt possible quand la bilirubine est ≥ 2 mg/dl sous le seuil de début, soit ≤ ${show(tP-2)}.`,
+      'Après l\'arrêt : bilirubine 6 à 12 h après si hémolyse, < 38 SA ou début avant 48 h ; sinon contrôle dans 1 à 2 jours.'];
+    if (bt - tP >= 0 && iso) todo.push('Hémolyse isoimmune : surveiller de près ; immunoglobulines IV si la bilirubine approche du seuil d\'escalade.');
+  } else {
+    cls='v-ok'; title='Pas de photothérapie';
+    const diff = tP - bt;
+    sub=`Bilirubine ${show(diff)} sous le seuil de photothérapie.`;
+    todo = followUp(diff, h);
+  }
+
+  // Alertes
+  const al = [];
+  if (alb != null){
+    const ratio = bt / (alb/10);
+    const lim = ag >= 38 ? (risk ? 7.2 : 8.0) : (risk ? 6.8 : 7.2);
+    al.push([ratio >= lim ? 'bad' : 'info', `Rapport bilirubine/albumine : ${fmt(ratio,1)} (mg/dl ÷ g/dl) ; seuil d'exsanguinotransfusion à discuter ≥ ${fmt(lim,1)}.`]);
+  }
+  const v0 = num($('bt0').value), h0 = num($('age0').value);
+  if (v0 != null && h0 != null && h > h0){
+    const rate = (bt - toMgdl(v0)) / (h - h0);
+    const lim = h <= 24 ? 0.3 : 0.2;
+    al.push([rate >= lim ? 'bad' : 'info', `Vitesse d'ascension : ${fmt(rate,2)} mg/dl/h (${fmt(rate*U[unit].f,U[unit].d ? 2 : 1)} ${U[unit].lab}/h)` +
+      (rate >= lim ? ` ≥ ${fmt(lim,1)} mg/dl/h : hémolyse probable, faire un Coombs direct.` : '.')]);
+  }
+  al.push(['warn','Quel que soit le chiffre : signes d\'encéphalopathie aiguë (hypertonie, opisthotonos, cri aigu, léthargie marquée) = exsanguinotransfusion en urgence.']);
+
+  R.innerHTML = `
+    <div class="verdict ${cls}"><div class="t">${title}</div><div class="s">${sub}</div></div>
+    <table class="thr">
+      <tr class="me"><td><b>Bilirubine du patient</b><small>${fmt(h,0)} h · ${ag>=40?'≥ 40':ag} SA${risk?' · avec FdR':''}</small></td><td class="q">${show(bt)}</td></tr>
+      <tr><td><span class="dot" style="background:var(--photo)"></span>Seuil photothérapie</td><td class="q">${show(tP)}</td></tr>
+      <tr><td><span class="dot" style="background:var(--esc)"></span>Seuil escalade des soins</td><td class="q">${show(tEsc)}</td></tr>
+      <tr><td><span class="dot" style="background:var(--exch)"></span>Seuil exsanguinotransfusion</td><td class="q">${show(tE)}</td></tr>
+    </table>
+    ${chart(cP, cE, h, bt)}
+    <ul class="todo">${todo.map(t=>`<li>${t}</li>`).join('')}</ul>
+    <ul class="alerts">${al.map(([t,x])=>`<li class="${t}">${x}</li>`).join('')}</ul>
+    <button type="button" class="btn" id="copy">Copier le résumé</button>`;
+  $('copy').onclick = copyRx;
+
+  lastText = `Ictère – ${ag>=40?'≥ 40':ag} SA, ${fmt(h,0)} h${risk?', avec facteur(s) de risque':', sans facteur de risque'}\n` +
+    `BT ${show(bt)} | photothérapie ${show(tP)} | escalade ${show(tEsc)} | EST ${show(tE)}\n` +
+    `→ ${title}\n` + todo.map(t => '- ' + t).join('\n');
+}
+
+function chart(cP, cE, h, bt){
+  const W=340, H=190, L=34, Rr=8, T=10, B=26;
+  const xmax = h > 132 ? 336 : 168;
+  const ymaxD = Math.max(thr(cE, xmax), bt) + 1, yminD = 0;
+  const f = U[unit].f;
+  const X = x => L + (x/xmax)*(W-L-Rr);
+  const Y = y => T + (1 - (y-yminD)/(ymaxD-yminD))*(H-T-B);
+  const path = (c, off=0) => { let s=''; for (let x=0; x<=xmax; x+=2) s += (x?'L':'M') + X(x).toFixed(1) + ',' + Y(thr(c,x)+off).toFixed(1); return s; };
+  // graduations Y dans l'unité choisie
+  const ymaxU = ymaxD*f, step = unit==='mgdl' ? 5 : (unit==='mgl' ? 50 : 100);
+  let grid='';
+  for (let yu=0; yu<=ymaxU; yu+=step){ const y=Y(yu/f);
+    grid += `<line x1="${L}" x2="${W-Rr}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${L-4}" y="${y+3}" font-size="9" text-anchor="end" fill="var(--muted)">${yu}</text>`; }
+  for (let xd=0; xd<=xmax; xd+=24){ const x=X(xd);
+    grid += `<line x1="${x}" x2="${x}" y1="${T}" y2="${H-B}" stroke="var(--line)"/><text x="${x}" y="${H-B+12}" font-size="9" text-anchor="middle" fill="var(--muted)">${xd===0?'0':'J'+xd/24}</text>`; }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="margin-top:12px;display:block" role="img" aria-label="Courbes de seuils">
+    ${grid}
+    <path d="${path(cE)}" fill="none" stroke="var(--exch)" stroke-width="2"/>
+    <path d="${path(cE,-2)}" fill="none" stroke="var(--esc)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <path d="${path(cP)}" fill="none" stroke="var(--photo)" stroke-width="2"/>
+    <circle cx="${X(Math.min(h,xmax))}" cy="${Y(bt)}" r="5" fill="var(--ink)" stroke="var(--card)" stroke-width="2"/>
+    <text x="${W-Rr}" y="${H-4}" font-size="9" text-anchor="end" fill="var(--muted)">âge · bilirubine en ${U[unit].lab}</text>
+  </svg>`;
+}
+
+function toast(m){ const e=$('toast'); e.textContent=m; e.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>e.classList.remove('show'),1800); }
+async function copyRx(){
+  if (!lastText) return;
+  try { await navigator.clipboard.writeText(lastText); toast('Résumé copié'); }
+  catch(e){ try{ const ta=document.createElement('textarea'); ta.value=lastText; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast('Résumé copié'); }catch(e2){ toast('Copie impossible ici'); } }
+}
+
+$('unit').querySelectorAll('button').forEach(b => {
+  b.classList.toggle('on', b.dataset.v === unit);
+  b.addEventListener('click', () => {
+    // convertir les valeurs saisies vers la nouvelle unité
+    const conv = id => { const x = num($(id).value); if (x != null){ const mg = x / U[unit].f; $(id).value = fmt(mg*U[b.dataset.v].f, U[b.dataset.v].d); } };
+    conv('bt'); conv('bt0');
+    unit = b.dataset.v; try{ localStorage.setItem('bili-unit', unit); }catch(e){}
+    $('unit').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  });
+});
+['ag','age','bt','alb','bt0','age0','rf_iso','rf_g6pd','rf_sep','rf_inst','rf_alb'].forEach(id => { $(id).addEventListener('input', render); $(id).addEventListener('change', render); });
+render();
+})();
+</script>
+</body>
+</html>
